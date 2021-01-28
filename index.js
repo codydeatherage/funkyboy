@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const ffmpeg = require('ffmpeg');
 const fs = require('fs');
-const { prefix, token } = require('./config.json');
+const auth = require('./auth.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -18,7 +18,7 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
-    if (message.author.bot || !message.content.startsWith(prefix)) return;
+    if (message.author.bot || !message.content.startsWith(auth.prefix)) return;
     
     // const args = message.content.slice(prefix.length).trim().split(/ +/);
     // const cmd = args.shift().toLowerCase();
@@ -30,7 +30,7 @@ client.on('message', async message => {
     // } else if(cmd === 'stop'){
     //     client.commands.get('stop').execute(message, args);
     // }
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
+    const args = message.content.slice(auth.prefix.length).trim().split(/ +/);
     const cmdName = args.shift().toLowerCase();
     const cmd = client.commands.get(cmdName);
 
@@ -45,4 +45,4 @@ client.on('message', async message => {
 
 })
 
-client.login(token);
+client.login(auth.token);
